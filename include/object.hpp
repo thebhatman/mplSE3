@@ -4,6 +4,8 @@
 #include "gl3w/gl3w.h"
 #include "GLFW/glfw3.h"
 
+#include "sprite.hpp"
+
 namespace sim {
 
 class Object {
@@ -21,8 +23,11 @@ public:
    inline glm::vec3 velocity() const { return _velocity; }
 
    Object();
-   Object
+   Object(std::string _name, glm::vec3 _position,
+          glm::vec3 _size, glm::vec3 _color,
+          glm::vec3 _velocity);
 
+   void render(Sprite &sprite);
 };
 
 } // namespace sim

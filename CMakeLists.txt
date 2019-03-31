@@ -18,6 +18,8 @@ set(SRCS
     src/glw3.c
     src/scene.cc
     src/shader.cc
+    src/object.cc
+    src/sprite.cc
     )
 
 add_executable(simulator tests/simulate.cc ${SRCS})

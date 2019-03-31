@@ -2,8 +2,11 @@
 #define _SCENE_HPP_
 
 #include <string>
+#include <vector>
 
 #include "shader.hpp"
+#include "object.hpp"
+#include "sprite.hpp"
 
 namespace sim {
 
@@ -16,6 +19,10 @@ private:
     GLFWwindow *_shared_window;
 
     Shader *shader;
+    Sprite *sprite;
+
+    // objects in the scene
+    std::vector<Object*> _objects;
 
 public:
     Scene();

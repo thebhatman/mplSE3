@@ -40,32 +40,24 @@ int Scene::render() {
         return -1;
     }
 
+    // TODO: Move it to sprite
     // Create a simple shader
     shader = new Shader("../shaders/simple.vs",
                         "../shaders/simple.fs");
+    
+    // Sprite for rendering all objects
+    sprite = new Sprite(*shader);
 
-    float vertices[] = {
-      -0.5, -0.5, 0.0,
-       0.5, -0.5, 0.0,
-       0.0,  0.5, 0.0
-    };
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    // Create a simple object
+    Object *obj = new Object();
+    _objects.push_back(obj);
 
     while (!glfwWindowShouldClose(_shared_window)) {
-        shader->use();
-        glBindVertexArray(VAO);
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        for (auto &obj: _objects) {
+            obj->render(*sprite);
+        }
+
         glfwSwapBuffers(_shared_window);
         glfwPollEvents();
     }

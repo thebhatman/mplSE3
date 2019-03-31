@@ -7,6 +7,7 @@
 #include "shader.hpp"
 #include "object.hpp"
 #include "sprite.hpp"
+#include "camera.hpp"
 
 namespace sim {
 
@@ -20,6 +21,9 @@ private:
 
     Shader *shader;
     Sprite *sprite;
+
+    // camera and its variables
+    Camera *camera;
 
     // objects in the scene
     std::vector<Object*> _objects;

@@ -24,7 +24,7 @@ enum cam_type {
 const float YAW         = -90.0f;
 const float PITCH       = 0.0f;
 const float SPEED       = 2.5f;
-const float SENSITIVITY = 0.5f;
+const float SENSITIVITY = 0.05f;
 const float ZOOM        = 45.0f;
 
 class Camera {
@@ -57,7 +57,7 @@ public:
         update_camera_vectors();
     }
 
-    glm::mat4 get_view_matrix(cam_type type=MOVING) {
+    glm::mat4 get_view_matrix(cam_type type=STATIC) {
         if (type == STATIC) {
             return glm::lookAt(position, position + front, up);
         } else {

@@ -44,7 +44,7 @@ int Scene::render() {
     // Create a simple shader
     shader = new Shader("../shaders/simple.vs",
                         "../shaders/simple.fs");
-    
+
     // Sprite for rendering all objects
     sprite = new Sprite(*shader);
 

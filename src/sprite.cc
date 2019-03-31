@@ -33,6 +33,14 @@ void Sprite::render(glm::vec3 position,
 
     // TODO: Handle the above variables
     _shader.use();
+
+    glm::mat4 model = glm::mat4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
+    model = glm::translate(model, position);
+    model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.5f * size.z));
+    model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, -0.5f * size.z));
+    model = glm::scale(model, size);
+    _shader.setmat4("model", model);
+
     glBindVertexArray(_VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glBindVertexArray(0);

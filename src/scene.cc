@@ -48,6 +48,18 @@ int Scene::render() {
     // Sprite for rendering all objects
     sprite = new Sprite(*shader);
 
+    // Add perspective projection
+    GLfloat AR = static_cast<float>(_width) / static_cast<float>(_height);
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f),
+                                            AR, 0.1f, 100.0f);
+    glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 10.0f),
+                                 glm::vec3(0.0f, 0.0f, 0.0f),
+                                 glm::vec3(0.0f, 1.0f, 0.0f));
+
+    shader->use();
+    shader->setmat4("projection", projection);
+    shader->setmat4("view", view);
+
     // Create a simple object
     Object *obj = new Object();
     _objects.push_back(obj);

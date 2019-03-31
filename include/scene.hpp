@@ -3,11 +3,14 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "shader.hpp"
 #include "object.hpp"
 #include "sprite.hpp"
 #include "camera.hpp"
+#include "texture.hpp"
+#include "utils.hpp"
 
 namespace sim {
 
@@ -22,9 +25,11 @@ private:
     Shader *shader;
     Sprite *sprite;
 
-
     // objects in the scene
     std::vector<Object*> _objects;
+
+    // database of textures
+    std::map<std::string, Texture2D> _textures;
 
 public:
     Scene();
@@ -44,10 +49,14 @@ public:
     static float last_frame;
     static float delta_time;
 
+    // openGL window callbacks
     static void scroll_callback(GLFWwindow *window, double dx, double dy);
     static void process_input(GLFWwindow *window);
     static void mouse_callback(GLFWwindow *window, double x_new, double y_new);
     static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
+
+    // generate some random objects in the scene
+    void generate_random_objects(size_t num=1);
 };
 
 } // namespace sim

@@ -20,6 +20,8 @@ set(SRCS
     src/shader.cc
     src/object.cc
     src/sprite.cc
+    src/texture.cc
+    src/utils.cc
     )
 
 add_executable(simulator tests/simulate.cc ${SRCS})

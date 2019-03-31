@@ -2,6 +2,7 @@
 #define _SPRITE_HPP_
 
 #include "shader.hpp"
+#include "texture.hpp"
 
 namespace sim {
 
@@ -16,10 +17,11 @@ public:
    Sprite(Shader &shader);
    ~Sprite();
 
-   void render(glm::vec3 position,
-               glm::vec3 size,
-               glm::vec3 color,
-               glm::vec3 velocity);
+   void render(glm::vec3 &position,
+               glm::vec3 &size,
+               glm::vec3 &color,
+               glm::vec3 &velocity,
+               Texture2D &texture);
 };
 
 } // namespace sim

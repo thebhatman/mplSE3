@@ -34,6 +34,15 @@ int Scene::init() {
     glfwMakeContextCurrent(_window);   
     glfwSwapInterval(1);
     gl3wInit();
+
+    // Load textures
+    _textures["wall0"] = utils::load_texture_from_file("../textures/wall0.tga");
+    _textures["wall1"] = utils::load_texture_from_file("../textures/wall1.tga");
+    _textures["wall1"] = utils::load_texture_from_file("../textures/wall1.tga");
+    _textures["wall2"] = utils::load_texture_from_file("../textures/wall2.tga");
+    _textures["wall3"] = utils::load_texture_from_file("../textures/wall3.tga");
+    _textures["wall4"] = utils::load_texture_from_file("../textures/wall4.tga");
+    _textures["wall5"] = utils::load_texture_from_file("../textures/wall5.tga");
 }
 
 int Scene::render() {
@@ -76,8 +85,9 @@ int Scene::render() {
     shader->setmat4("view", view);
 
     // Create a simple object
-    Object *obj = new Object();
-    _objects.push_back(obj);
+    // Object *obj = new Object();
+    // _objects.push_back(obj);
+    glEnable(GL_DEPTH_TEST);
 
     while (!glfwWindowShouldClose(_shared_window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -92,6 +102,7 @@ int Scene::render() {
         shader->use();
         shader->setmat4("projection", projection);
         shader->setmat4("view", view);
+        shader->seti("image", 0);
 
         for (auto &obj: _objects) {
             obj->render(*sprite);
@@ -145,6 +156,18 @@ void Scene::process_input(GLFWwindow *window) {
 
 void Scene::scroll_callback(GLFWwindow *window, double dx, double dy) {
     camera->process_scroll(dy);
+}
+
+void Scene::generate_random_objects(size_t num) {
+    for (int ii = 0; ii < num; ++ii) {
+        Object *obj = new Object("cube",
+                                 glm::vec3(0.0f, 0.0f, 0.0f),
+                                 glm::vec3(2.0f, 2.0f, 2.0f),
+                                 glm::vec3(1.0f, 1.0f, 1.0f),
+                                 glm::vec3(0.0f, 0.0f, 0.0f),
+                                 _textures["wall0"]);
+        _objects.push_back(obj);
+    }
 }
 
 } // namespace sim

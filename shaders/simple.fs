@@ -1,6 +1,13 @@
 #version 330 core
-out vec4 FragColor;
+out vec4 frag_color;
+
+in VS_OUT {
+    vec2 tex;
+} fs_in;
+
+uniform sampler2D image;
+uniform vec3 color;
 
 void main() {
-   FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+   frag_color = vec4(color, 1.0f) * texture(image, fs_in.tex);
 }

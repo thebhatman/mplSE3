@@ -5,6 +5,7 @@
 #include "GLFW/glfw3.h"
 
 #include "sprite.hpp"
+#include "texture.hpp"
 
 namespace sim {
 
@@ -16,6 +17,8 @@ private:
    glm::vec3 _color;
    glm::vec3 _velocity;
 
+   Texture2D _texture;
+
 public:
    inline glm::vec3 position() const { return _position; }
    inline glm::vec3 size()     const { return _size;     }
@@ -25,7 +28,8 @@ public:
    Object();
    Object(std::string _name, glm::vec3 _position,
           glm::vec3 _size, glm::vec3 _color,
-          glm::vec3 _velocity);
+          glm::vec3 _velocity,
+          Texture2D texture);
 
    void render(Sprite &sprite);
 };

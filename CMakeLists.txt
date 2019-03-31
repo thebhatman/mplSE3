@@ -22,6 +22,8 @@ set(SRCS
     src/sprite.cc
     src/texture.cc
     src/utils.cc
+    src/plane.cc
+    src/sprite_plane.cc
     )
 
 add_executable(simulator tests/simulate.cc ${SRCS})

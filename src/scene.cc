@@ -2,7 +2,7 @@
 
 namespace sim {
 
-Camera *Scene::camera = new Camera();
+Camera *Scene::camera = new Camera(glm::vec3(30.0f, 30.0f, 0.0f));
 GLboolean Scene::keys[1024];
 bool Scene::first_mouse = true;
 double Scene::x_last;
@@ -31,7 +31,8 @@ int Scene::init() {
         glfwTerminate();
         return -1;
     }
-    glfwMakeContextCurrent(_window);   
+    glfwMakeContextCurrent(_window);
+    glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSwapInterval(1);
     gl3wInit();
 
@@ -43,6 +44,9 @@ int Scene::init() {
     _textures["wall3"] = utils::load_texture_from_file("../textures/wall3.tga");
     _textures["wall4"] = utils::load_texture_from_file("../textures/wall4.tga");
     _textures["wall5"] = utils::load_texture_from_file("../textures/wall5.tga");
+    _textures["wall6"] = utils::load_texture_from_file("../textures/marble.jpg");
+    _textures["ground"] = utils::load_texture_from_file("../textures/ground.tga");
+    _textures["grass"] = utils::load_texture_from_file("../textures/grass2.jpg");
 }
 
 int Scene::render() {
@@ -66,7 +70,6 @@ int Scene::render() {
         return -1;
     }
 
-    // TODO: Move it to sprite
     // Create a simple shader
     shader = new Shader("../shaders/simple.vs",
                         "../shaders/simple.fs");
@@ -74,21 +77,21 @@ int Scene::render() {
     // Sprite for rendering all objects
     sprite = new Sprite(*shader);
 
+    // For rendering planes
+    splane = new SPlane(*shader);
+
     // Add perspective projection
     GLfloat AR = (float)static_cast<float>(_width) / static_cast<float>(_height);
     glm::mat4 projection = glm::perspective(glm::radians(45.0f),
-                                            AR, 0.1f, 100.0f);
+                                            AR, 0.1f, 1000.0f);
     glm::mat4 view = camera->get_view_matrix();
 
     shader->use();
     shader->setmat4("projection", projection);
     shader->setmat4("view", view);
 
-    // Create a simple object
-    // Object *obj = new Object();
-    // _objects.push_back(obj);
     glEnable(GL_DEPTH_TEST);
-
+    glfwSetInputMode(_shared_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     while (!glfwWindowShouldClose(_shared_window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         process_input(_shared_window);
@@ -96,7 +99,7 @@ int Scene::render() {
         // Update the scene with new events
         projection = glm::perspective(glm::radians(camera->zoom),
                                       AR,
-                                      0.1f, 100.0f);
+                                      0.1f, 1000.0f);
         view = camera->get_view_matrix();
 
         shader->use();
@@ -104,8 +107,14 @@ int Scene::render() {
         shader->setmat4("view", view);
         shader->seti("image", 0);
 
+        // Render objects
         for (auto &obj: _objects) {
             obj->render(*sprite);
+        }
+
+        // Render planes and walls
+        for (auto &_plane: _planes) {
+            _plane->render(*splane);
         }
 
         glfwSwapBuffers(_shared_window);
@@ -159,15 +168,25 @@ void Scene::scroll_callback(GLFWwindow *window, double dx, double dy) {
 }
 
 void Scene::generate_random_objects(size_t num) {
+    // Add cuboids
     for (int ii = 0; ii < num; ++ii) {
         Object *obj = new Object("cube",
                                  glm::vec3(0.0f, 0.0f, 0.0f),
-                                 glm::vec3(2.0f, 2.0f, 2.0f),
+                                 glm::vec3(50.0f, 50.0f, 50.0f),
                                  glm::vec3(1.0f, 1.0f, 1.0f),
                                  glm::vec3(0.0f, 0.0f, 0.0f),
-                                 _textures["wall0"]);
+                                 _textures["wall6"]);
         _objects.push_back(obj);
     }
+
+    // Add planes (walls and ground surface)
+    Plane *plane = new Plane("ground",
+                             glm::vec3(0.0f, 0.0f, 0.0f),
+                             glm::vec3(500.0f, 1.0f, 500.0f),
+                             glm::vec3(1.0f, 1.0f, 1.0f),
+                             _textures["wall4"]);
+    _planes.push_back(plane);
+
 }
 
 } // namespace sim

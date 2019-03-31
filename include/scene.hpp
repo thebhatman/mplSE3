@@ -11,6 +11,8 @@
 #include "camera.hpp"
 #include "texture.hpp"
 #include "utils.hpp"
+#include "sprite_plane.hpp"
+#include "plane.hpp"
 
 namespace sim {
 
@@ -24,9 +26,13 @@ private:
 
     Shader *shader;
     Sprite *sprite;
+    SPlane *splane;
 
     // objects in the scene
     std::vector<Object*> _objects;
+
+    // planes and walls in the scene
+    std::vector<Plane*> _planes;
 
     // database of textures
     std::map<std::string, Texture2D> _textures;

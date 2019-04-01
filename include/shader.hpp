@@ -20,7 +20,7 @@ public:
     unsigned int _id;
 
     Shader() {}
-    Shader(const char *v_code, const char *f_code);
+    Shader(const char *v_path, const char *f_path, const char *g_path=NULL);
 
     Shader* use();
 

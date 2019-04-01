@@ -7,12 +7,17 @@
 
 #include "shader.hpp"
 #include "object.hpp"
-#include "sprite.hpp"
 #include "camera.hpp"
 #include "texture.hpp"
 #include "utils.hpp"
-#include "sprite_plane.hpp"
 #include "plane.hpp"
+
+#include "sprite/sprite.hpp"
+#include "sprite/splane.hpp"
+#include "sprite/scube.hpp"
+#include "sprite/sline.hpp"
+#include "sprite/splane.hpp"
+#include "sprite/spoint.hpp"
 
 namespace sim {
 
@@ -24,9 +29,15 @@ private:
     GLFWwindow *_window;
     GLFWwindow *_shared_window;
 
-    Shader *shader;
-    Sprite *sprite;
-    SPlane *splane;
+    // Different shaders
+    Shader *shader_cube;
+    Shader *shader_line;
+    Shader *shader_point;
+
+    SCube  *_sprite_scube;
+    SLine  *_sprite_sline;
+    SPlane *_sprite_plane;
+    SPoint *_sprite_point;
 
     // objects in the scene
     std::vector<Object*> _objects;

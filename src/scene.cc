@@ -70,15 +70,20 @@ int Scene::render() {
         return -1;
     }
 
-    // Create a simple shader
-    shader = new Shader("../shaders/simple.vs",
-                        "../shaders/simple.fs");
+    // Create different shaders
+    shader_cube = new Shader("../shaders/simple.vs",
+                             "../shaders/simple.fs");
+    shader_line = new Shader("../shaders/lines/lines.vs",
+                             "../shaders/lines/lines.fs",
+                             "../shaders/lines/lines.gs");
+    shader_point = new Shader("../shaders/points/point.vs",
+                              "../shaders/points/point.fs");
 
-    // Sprite for rendering all objects
-    sprite = new Sprite(*shader);
-
-    // For rendering planes
-    splane = new SPlane(*shader);
+    // Map the sprites
+    _sprite_scube = new SCube(*shader_cube);
+    _sprite_sline = new SLine(*shader_line);
+    _sprite_plane = new SPlane(*shader_cube);
+    _sprite_point = new SPoint(*shader_point);
 
     // Add perspective projection
     GLfloat AR = (float)static_cast<float>(_width) / static_cast<float>(_height);
@@ -86,9 +91,15 @@ int Scene::render() {
                                             AR, 0.1f, 1000.0f);
     glm::mat4 view = camera->get_view_matrix();
 
-    shader->use();
-    shader->setmat4("projection", projection);
-    shader->setmat4("view", view);
+    shader_cube->use();
+    shader_cube->setmat4("projection", projection);
+    shader_cube->setmat4("view", view);
+    shader_line->use();
+    shader_line->setmat4("projection", projection);
+    shader_line->setmat4("view", view);
+    shader_line->use();
+    shader_line->setmat4("projection", projection);
+    shader_line->setmat4("view", view);
 
     glEnable(GL_DEPTH_TEST);
     glfwSetInputMode(_shared_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -102,19 +113,25 @@ int Scene::render() {
                                       0.1f, 1000.0f);
         view = camera->get_view_matrix();
 
-        shader->use();
-        shader->setmat4("projection", projection);
-        shader->setmat4("view", view);
-        shader->seti("image", 0);
+        shader_cube->use();
+        shader_cube->setmat4("projection", projection);
+        shader_cube->setmat4("view", view);
+        shader_cube->seti("image", 0);
+        shader_line->use();
+        shader_line->setmat4("projection", projection);
+        shader_line->setmat4("view", view);
+        shader_line->use();
+        shader_line->setmat4("projection", projection);
+        shader_line->setmat4("view", view);
 
         // Render objects
         for (auto &obj: _objects) {
-            obj->render(*sprite);
+            obj->render(*_sprite_scube);
         }
 
         // Render planes and walls
         for (auto &_plane: _planes) {
-            _plane->render(*splane);
+            _plane->render(*_sprite_plane);
         }
 
         glfwSwapBuffers(_shared_window);

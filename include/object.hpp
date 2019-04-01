@@ -4,7 +4,7 @@
 #include "gl3w/gl3w.h"
 #include "GLFW/glfw3.h"
 
-#include "sprite.hpp"
+#include "sprite/scube.hpp"
 #include "texture.hpp"
 
 namespace sim {
@@ -31,7 +31,7 @@ public:
           glm::vec3 _velocity,
           Texture2D texture);
 
-   void render(Sprite &sprite);
+   void render(SCube &sprite);
 };
 
 } // namespace sim

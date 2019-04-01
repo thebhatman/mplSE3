@@ -19,11 +19,14 @@ set(SRCS
     src/scene.cc
     src/shader.cc
     src/object.cc
-    src/sprite.cc
     src/texture.cc
     src/utils.cc
     src/plane.cc
-    src/sprite_plane.cc
+    src/sprite/scube.cc
+    src/sprite/sline.cc
+    src/sprite/splane.cc
+    src/sprite/spoint.cc
+    src/sprite/sprite.cc
     )
 
 add_executable(simulator tests/simulate.cc ${SRCS})

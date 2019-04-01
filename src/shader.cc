@@ -3,14 +3,15 @@
 namespace sim {
 
 Shader::Shader(const char *v_path, 
-               const char *f_path) {
+               const char *f_path,
+               const char *g_path) {
 
-    std::string v_code_, f_code_;
+    std::string v_code_, f_code_, g_code_;
     try {
-        std::ifstream v_file, f_file;
+        std::ifstream v_file, f_file, g_file;
         v_file.open(v_path);
         f_file.open(f_path);
-        std::stringstream v_stream, f_stream;
+        std::stringstream v_stream, f_stream, g_stream;
 
         v_stream << v_file.rdbuf();
         f_stream << f_file.rdbuf();
@@ -20,6 +21,16 @@ Shader::Shader(const char *v_path,
 
         v_code_ = v_stream.str();
         f_code_ = f_stream.str();
+
+        if (g_path != NULL) {
+            g_file.open(g_path);
+
+            g_stream << g_file.rdbuf();
+
+            g_file.close();
+
+            g_code_ = g_stream.str();
+        }
     } catch(std::ifstream::failure e) {
         std::cout << "Couldn't read the file"
                   << std::endl;
@@ -43,6 +54,22 @@ Shader::Shader(const char *v_path,
                << std::endl;
     }
 
+    // Geometry Shader
+    unsigned int g_shader;
+    if (g_path != NULL) {
+        const char *g_code = g_code_.c_str();
+        g_shader = glCreateShader(GL_GEOMETRY_SHADER);
+        glShaderSource(g_shader, 1, &g_code, NULL);
+        glCompileShader(g_shader);
+        glGetShaderiv(g_shader, GL_COMPILE_STATUS, &success);
+        if (!success) {
+         glGetShaderInfoLog(g_shader, 512, NULL, info_log);
+         std::cout << "Couldn't compile the geometry shader"
+                   << info_log
+                   << std::endl;
+        }
+    }
+
     // Fragment Shader
     unsigned int f_shader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(f_shader, 1, &f_code, NULL);
@@ -58,6 +85,8 @@ Shader::Shader(const char *v_path,
     // Shader program
     this->_id = glCreateProgram();
     glAttachShader(_id, v_shader);
+    if (g_path != NULL)
+        glAttachShader(_id, g_shader);
     glAttachShader(_id, f_shader);
     glLinkProgram(_id);
 
@@ -70,6 +99,8 @@ Shader::Shader(const char *v_path,
     }
     glDeleteShader(v_shader);
     glDeleteShader(f_shader);
+    if (g_path != NULL)
+        glDeleteShader(g_shader);
 }
 
 Shader* Shader::use() {

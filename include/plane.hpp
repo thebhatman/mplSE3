@@ -4,7 +4,7 @@
 #include "gl3w/gl3w.h"
 #include "GLFW/glfw3.h"
 
-#include "sprite_plane.hpp"
+#include "sprite/splane.hpp"
 #include "texture.hpp"
 
 namespace sim {

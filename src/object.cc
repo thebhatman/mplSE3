@@ -13,12 +13,11 @@ Object::Object(std::string name, glm::vec3 position,
    _name(name), _position(position), _size(size), _color(color),
    _velocity(velocity), _texture(texture) {}
 
-void Object::render(Sprite &sprite) {
-   sprite.render(_position,
-                 _size,
-                 _color,
-                 _velocity,
-                 _texture);
+void Object::render(SCube &sprite) {
+    sprite.render(_texture,
+                  _position,
+                  _size,
+                  _color);
 }
 
 } // namespace sim

@@ -13,10 +13,10 @@ Plane::Plane(std::string name, glm::vec3 position,
    _color(color), _texture(texture) {}
 
 void Plane::render(SPlane &splane) {
-   splane.render(_position,
+   splane.render(_texture,
+                 _position,
                  _size,
-                 _color,
-                 _texture);
+                 _color);
 }
 
 } // namespace sim

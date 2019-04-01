@@ -11,6 +11,8 @@
 #include "texture.hpp"
 #include "utils.hpp"
 #include "plane.hpp"
+#include "point.hpp"
+#include "line.hpp"
 
 #include "sprite/sprite.hpp"
 #include "sprite/splane.hpp"
@@ -44,6 +46,12 @@ private:
 
     // planes and walls in the scene
     std::vector<Plane*> _planes;
+
+    // points in the scene
+    std::vector<Point*> _points;
+
+    // lines in the scene
+    std::vector<Line*>  _lines;
 
     // database of textures
     std::map<std::string, Texture2D> _textures;

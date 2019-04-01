@@ -97,11 +97,12 @@ int Scene::render() {
     shader_line->use();
     shader_line->setmat4("projection", projection);
     shader_line->setmat4("view", view);
-    shader_line->use();
-    shader_line->setmat4("projection", projection);
-    shader_line->setmat4("view", view);
+    shader_point->use();
+    shader_point->setmat4("projection", projection);
+    shader_point->setmat4("view", view);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_PROGRAM_POINT_SIZE);
     glfwSetInputMode(_shared_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     while (!glfwWindowShouldClose(_shared_window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -120,9 +121,9 @@ int Scene::render() {
         shader_line->use();
         shader_line->setmat4("projection", projection);
         shader_line->setmat4("view", view);
-        shader_line->use();
-        shader_line->setmat4("projection", projection);
-        shader_line->setmat4("view", view);
+        shader_point->use();
+        shader_point->setmat4("projection", projection);
+        shader_point->setmat4("view", view);
 
         // Render objects
         for (auto &obj: _objects) {
@@ -132,6 +133,11 @@ int Scene::render() {
         // Render planes and walls
         for (auto &_plane: _planes) {
             _plane->render(*_sprite_plane);
+        }
+
+        // Render points
+        for (auto &_point: _points) {
+            _point->render(*_sprite_point);
         }
 
         glfwSwapBuffers(_shared_window);
@@ -204,6 +210,12 @@ void Scene::generate_random_objects(size_t num) {
                              _textures["wall4"]);
     _planes.push_back(plane);
 
+    // Add some points
+    Point *point = new Point("start",
+                             glm::vec3(0.0f, 0.0f, 0.0f),
+                             5.0f,
+                             glm::vec3(1.0f, 0.0f, 0.0f));
+    _points.push_back(point);
 }
 
 } // namespace sim

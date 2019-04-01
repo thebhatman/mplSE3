@@ -22,6 +22,7 @@ set(SRCS
     src/texture.cc
     src/utils.cc
     src/plane.cc
+    src/point.cc
     src/sprite/scube.cc
     src/sprite/sline.cc
     src/sprite/splane.cc
@@ -29,6 +30,5 @@ set(SRCS
     src/sprite/sprite.cc
     )
 
-add_executable(simulator tests/simulate.cc ${SRCS})
+add_executable(simulator examples/simulate.cc ${SRCS})
 target_link_libraries(simulator ${LIBS})
-

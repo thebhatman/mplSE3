@@ -29,7 +29,7 @@ void SPoint::init() {
 }
 
 void SPoint::render(glm::vec3 position,
-                    glm::vec3 size,
+                    float size,
                     glm::vec3 color) {
 
     glm::mat4 model = glm::mat4(1,0,0,0,
@@ -37,11 +37,11 @@ void SPoint::render(glm::vec3 position,
                                 0,0,1,0,
                                 0,0,0,1);
     model = glm::translate(model, position);
-    model = glm::scale(model, size);
+    // model = glm::scale(model, size);
 
     _shader.use();
     _shader.setmat4("model", model);
-    _shader.setvec3("color", color);
+    // _shader.setvec3("color", color);
 
     glBindVertexArray(_VAO);
     glDrawArrays(GL_POINTS, 0, 1);

@@ -140,6 +140,11 @@ int Scene::render() {
             _point->render(*_sprite_point);
         }
 
+        // Render lines
+        for (auto &_line: _lines) {
+            _line->render(*_sprite_sline);
+        }
+
         glfwSwapBuffers(_shared_window);
         glfwPollEvents();
     }
@@ -195,7 +200,7 @@ void Scene::generate_random_objects(size_t num) {
     for (int ii = 0; ii < num; ++ii) {
         Object *obj = new Object("cube",
                                  glm::vec3(0.0f, 0.0f, 0.0f),
-                                 glm::vec3(50.0f, 50.0f, 50.0f),
+                                 glm::vec3(15.0f, 15.0f, 15.0f),
                                  glm::vec3(1.0f, 1.0f, 1.0f),
                                  glm::vec3(0.0f, 0.0f, 0.0f),
                                  _textures["wall6"]);
@@ -205,7 +210,7 @@ void Scene::generate_random_objects(size_t num) {
     // Add planes (walls and ground surface)
     Plane *plane = new Plane("ground",
                              glm::vec3(0.0f, 0.0f, 0.0f),
-                             glm::vec3(500.0f, 1.0f, 500.0f),
+                             glm::vec3(80.0f, 1.0f, 80.0f),
                              glm::vec3(1.0f, 1.0f, 1.0f),
                              _textures["wall4"]);
     _planes.push_back(plane);
@@ -216,6 +221,13 @@ void Scene::generate_random_objects(size_t num) {
                              5.0f,
                              glm::vec3(1.0f, 0.0f, 0.0f));
     _points.push_back(point);
+
+    // Add some lines
+    Line *line = new Line("test_line",
+                          glm::vec3(0.0f, 0.0f, 0.0f),
+                          glm::vec3(5.0f, 0.0f, 0.0f),
+                          glm::vec3(1.0f, 1.0f, 1.0f));
+    _lines.push_back(line);
 }
 
 } // namespace sim

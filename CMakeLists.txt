@@ -23,6 +23,7 @@ set(SRCS
     src/utils.cc
     src/plane.cc
     src/point.cc
+    src/line.cc
     src/sprite/scube.cc
     src/sprite/sline.cc
     src/sprite/splane.cc

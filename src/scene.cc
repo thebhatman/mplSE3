@@ -102,8 +102,10 @@ int Scene::render() {
     shader_point->setmat4("view", view);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_MULTISAMPLE);
     glEnable(GL_PROGRAM_POINT_SIZE);
     glfwSetInputMode(_shared_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
     while (!glfwWindowShouldClose(_shared_window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         process_input(_shared_window);
@@ -193,6 +195,27 @@ void Scene::process_input(GLFWwindow *window) {
 
 void Scene::scroll_callback(GLFWwindow *window, double dx, double dy) {
     camera->process_scroll(dy);
+}
+
+void Scene::draw_world_axes() {
+    _lines.push_back(
+        new Line("x-axis",
+                 glm::vec3(0.0f, 0.0f, 0.0f),
+                 glm::vec3(5.0f, 0.0f, 0.0f),
+                 glm::vec3(1.0f, 0.0f, 0.0f))
+        );
+    _lines.push_back(
+        new Line("y-axis",
+                 glm::vec3(0.0f, 0.0f, 0.0f),
+                 glm::vec3(0.0f, 5.0f, 0.0f),
+                 glm::vec3(0.0f, 1.0f, 0.0f))
+        );
+    _lines.push_back(
+        new Line("z-axis",
+                 glm::vec3(0.0f, 0.0f, 0.0f),
+                 glm::vec3(0.0f, 0.0f, 5.0f),
+                 glm::vec3(0.0f, 0.0f, 1.0f))
+        );
 }
 
 } // namespace sim

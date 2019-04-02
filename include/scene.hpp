@@ -94,6 +94,8 @@ public:
     inline std::map<std::string, Texture2D>& get_textures() {
         return _textures;
     }
+
+    void draw_world_axes();
 };
 
 } // namespace sim

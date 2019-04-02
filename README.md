@@ -32,5 +32,5 @@ Check out the wiki
 
 ## New features to be added
 - [ ] Moving camera along a trajectory
-- [ ] Antialiasing
+- [x] Antialiasing
 - [ ] Organize resources in a better way (textures & shaders)

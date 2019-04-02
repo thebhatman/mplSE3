@@ -36,7 +36,7 @@ void SLine::render(glm::vec3 position_s,
         3. Scale
     */
     glEnable(GL_LINE_WIDTH);
-    glLineWidth(10);
+    glLineWidth(1);
     glm::mat4 model = glm::mat4(1,0,0,0,
                                 0,1,0,0,
                                 0,0,1,0,

@@ -44,8 +44,8 @@ void SLine::render(glm::vec3 position_s,
     _shader.use();
     _shader.setmat4("model", model);
     _shader.setvec3("color", color);
-    _shader.setvec3("point1", glm::vec3(0.0f, 0.0f, 0.0f));
-    _shader.setvec3("point2", glm::vec3(100.0f, 0.0f, 0.0f));
+    _shader.setvec3("point1", position_s);
+    _shader.setvec3("point2", position_e);
 
     glBindVertexArray(_VAO);
     glDrawArrays(GL_LINES, 0, 2);

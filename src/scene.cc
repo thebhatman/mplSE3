@@ -2,7 +2,7 @@
 
 namespace sim {
 
-Camera *Scene::camera = new Camera(glm::vec3(30.0f, 30.0f, 0.0f));
+Camera *Scene::camera = new Camera(glm::vec3(00.0f, 5.0f, 10.0f));
 GLboolean Scene::keys[1024];
 bool Scene::first_mouse = true;
 double Scene::x_last;
@@ -223,11 +223,21 @@ void Scene::generate_random_objects(size_t num) {
     _points.push_back(point);
 
     // Add some lines
-    Line *line = new Line("test_line",
+    Line *line1 = new Line("test_line",
                           glm::vec3(0.0f, 0.0f, 0.0f),
                           glm::vec3(5.0f, 0.0f, 0.0f),
-                          glm::vec3(1.0f, 1.0f, 1.0f));
-    _lines.push_back(line);
+                          glm::vec3(1.0f, 0.0f, 0.0f));
+    Line *line2 = new Line("test_line",
+                          glm::vec3(0.0f, 0.0f, 0.0f),
+                          glm::vec3(0.0f, 5.0f, 0.0f),
+                          glm::vec3(0.0f, 1.0f, 0.0f));
+    Line *line3 = new Line("test_line",
+                          glm::vec3(0.0f, 0.0f, 0.0f),
+                          glm::vec3(0.0f, 0.0f, 5.0f),
+                          glm::vec3(0.0f, 0.0f, 1.0f));
+    _lines.push_back(line1);
+    _lines.push_back(line2);
+    _lines.push_back(line3);
 }
 
 } // namespace sim

@@ -1,5 +1,7 @@
 # Motion planning in SE(3)
 
+<p align="center"><img width="70%" height="70%" src="imgs/scene.png"/></p>
+
 ## Requirements
 - gl3w (window management)
 - glm (shader maths)

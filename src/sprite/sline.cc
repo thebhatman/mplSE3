@@ -30,11 +30,6 @@ void SLine::render(glm::vec3 position_s,
                    glm::vec3 position_e,
                    glm::vec3 color) {
 
-    /*
-        1. Rotate about x-axis
-        2. Translate to the first point
-        3. Scale
-    */
     glEnable(GL_LINE_WIDTH);
     glLineWidth(1);
     glm::mat4 model = glm::mat4(1,0,0,0,

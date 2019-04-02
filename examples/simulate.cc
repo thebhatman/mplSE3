@@ -16,16 +16,69 @@ int main() {
     // Generate the scene (by default no objects are present)
     Scene scene(1200, 900, "Simulator");
 
+    std::map<std::string, Texture2D> &_textures = scene.get_textures();
+
+    // Add ground plane
+    std::vector<Plane*> &_planes = scene.mutable_planes();
+    _planes.push_back(
+        new Plane("floor",
+                  glm::vec3(0.0f, -10.0f, 0.0f),
+                  glm::vec3(500.0f, 0.0f, 500.0f),
+                  glm::vec3(1.0f, 1.0f, 1.0f),
+                  _textures["floor"]
+                  )
+        );
+    // Add four walls
+    _planes.push_back(
+        new Plane("wall1",
+                  glm::vec3(500.0f, 0.0f, 0.0f),
+                  glm::vec3(1.0f, 100.0f, 500.0f),
+                  glm::vec3(1.0f, 1.0f, 1.0f),
+                  _textures["wall3"],
+                  90.0f,
+                  glm::vec3(0.0f, 0.0f, 1.0f)
+                  )
+        );
+    _planes.push_back(
+        new Plane("wall2",
+                  glm::vec3(-500.0f, 0.0f, 0.0f),
+                  glm::vec3(1.0f, 100.0f, 500.0f),
+                  glm::vec3(1.0f, 1.0f, 1.0f),
+                  _textures["wall3"],
+                  90.0f,
+                  glm::vec3(0.0f, 0.0f, 1.0f)
+                  )
+        );
+    _planes.push_back(
+        new Plane("wall3",
+                  glm::vec3(0.0f, 0.0f, 500.0f),
+                  glm::vec3(500.0f, 100.0f, 1.0f),
+                  glm::vec3(1.0f, 1.0f, 1.0f),
+                  _textures["wall3"],
+                  90.0f,
+                  glm::vec3(1.0f, 0.0f, 0.0f)
+                  )
+        );
+    _planes.push_back(
+        new Plane("wall4",
+                  glm::vec3(0.0f, 0.0f, -500.0f),
+                  glm::vec3(500.0f, 100.0f, 1.0f),
+                  glm::vec3(1.0f, 1.0f, 1.0f),
+                  _textures["wall3"],
+                  90.0f,
+                  glm::vec3(1.0f, 0.0f, 0.0f)
+                  )
+        );
+
     // Add cuboids
     std::vector<Object*> &_objects = scene.mutable_cubes();
-    std::map<std::string, Texture2D> &_textures = scene.get_textures();
     _objects.push_back(
         new Object("cube1",
-                   glm::vec3(-20.0f, 0.0f, 0.0f),  // center of cube
-                   glm::vec3(5.0f, 5.0f, 5.0f), // size of cube
-                   glm::vec3(1.0f, 1.0f, 1.0f),    // color
-                   glm::vec3(0.0f, 0.0f, 0.0f),    // velocity
-                   _textures["wall1"]              // texture to apply
+                   glm::vec3(-20.0f, 0.0f, 0.0f), // center of cube
+                   glm::vec3(5.0f, 5.0f, 5.0f),   // size of cube
+                   glm::vec3(1.0f, 1.0f, 1.0f),   // color
+                   glm::vec3(0.0f, 0.0f, 0.0f),   // velocity
+                   _textures["wall1"]             // texture to apply
                    )
         );
     _objects.push_back(
@@ -43,7 +96,7 @@ int main() {
                    glm::vec3(5.0f, 5.0f, 5.0f),
                    glm::vec3(1.0f, 1.0f, 1.0f),
                    glm::vec3(0.0f, 0.0f, 0.0f),
-                   _textures["wall3"]
+                   _textures["wall5"]
                    )
         );
 

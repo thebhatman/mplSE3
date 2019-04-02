@@ -19,7 +19,9 @@ public:
     virtual void render(Texture2D texture,
                         glm::vec3 position = glm::vec3(0.0f),
                         glm::vec3 size = glm::vec3(1.0f),
-                        glm::vec3 color = glm::vec3(1.0f));
+                        glm::vec3 color = glm::vec3(1.0f),
+                        float angle = 0.0f,
+                        glm::vec3 vector = glm::vec3(1.0f, 0.0f, 0.0f));
 };
 
 } // namespace sim

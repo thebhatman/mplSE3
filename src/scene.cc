@@ -2,7 +2,7 @@
 
 namespace sim {
 
-Camera *Scene::camera = new Camera(glm::vec3(00.0f, 5.0f, 10.0f));
+Camera *Scene::camera = new Camera(glm::vec3(530.0f, 290.0f, 530.0f));
 GLboolean Scene::keys[1024];
 bool Scene::first_mouse = true;
 double Scene::x_last;
@@ -45,8 +45,10 @@ int Scene::init() {
     _textures["wall4"] = utils::load_texture_from_file("../textures/wall4.tga");
     _textures["wall5"] = utils::load_texture_from_file("../textures/wall5.tga");
     _textures["wall6"] = utils::load_texture_from_file("../textures/marble.jpg");
+    _textures["wall7"] = utils::load_texture_from_file("../textures/wall6.tga");
     _textures["ground"] = utils::load_texture_from_file("../textures/ground.tga");
     _textures["grass"] = utils::load_texture_from_file("../textures/grass2.jpg");
+    _textures["floor"] = utils::load_texture_from_file("../textures/floor.png");
 }
 
 int Scene::render() {
@@ -88,7 +90,7 @@ int Scene::render() {
     // Add perspective projection
     GLfloat AR = (float)static_cast<float>(_width) / static_cast<float>(_height);
     glm::mat4 projection = glm::perspective(glm::radians(45.0f),
-                                            AR, 0.1f, 1000.0f);
+                                            AR, 0.1f, 2500.0f);
     glm::mat4 view = camera->get_view_matrix();
 
     shader_cube->use();
@@ -113,7 +115,7 @@ int Scene::render() {
         // Update the scene with new events
         projection = glm::perspective(glm::radians(camera->zoom),
                                       AR,
-                                      0.1f, 1000.0f);
+                                      0.1f, 2500.0f);
         view = camera->get_view_matrix();
 
         shader_cube->use();

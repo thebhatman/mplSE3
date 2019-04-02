@@ -15,7 +15,8 @@ private:
    glm::vec3 _position;
    glm::vec3 _size;
    glm::vec3 _color;
-
+   glm::vec3 _vector; // Rotate about this vector
+   float _angle;      // ... by this angle (in degrees)
    Texture2D _texture;
 
 public:
@@ -26,7 +27,9 @@ public:
    Plane();
    Plane(std::string _name, glm::vec3 _position,
          glm::vec3 _size, glm::vec3 _color,
-         Texture2D texture);
+         Texture2D texture,
+         float angle = 0.0f,
+         glm::vec3 vector = glm::vec3(1.0f, 0.0f, 0.0f));
 
    void render(SPlane &splane);
 };

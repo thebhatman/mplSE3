@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <thread>
+#include <unistd.h>
 
 #include "scene.hpp"
 #include "plane.hpp"
@@ -13,11 +14,11 @@ using namespace sim;
 
 int main() {
     // Generate the scene (by default no objects are present)
-    Scene scene(1200, 900, "Simulator");
+    Scene *scene = new Scene(1200, 900, "Simulator");
 
     // Add cuboids
-    std::vector<Object*> &_objects = scene.mutable_cubes();
-    std::map<std::string, Texture2D> &_textures = scene.get_textures();
+    std::vector<Object*> &_objects = scene->mutable_cubes();
+    std::map<std::string, Texture2D> &_textures = scene->get_textures();
     _objects.push_back(
         new Object("cube1",
                    glm::vec3(-20.0f, 0.0f, 0.0f),  // center of cube
@@ -47,7 +48,7 @@ int main() {
         );
 
     // Add some points
-    std::vector<Point*> &_points = scene.mutable_points();
+    std::vector<Point*> &_points = scene->mutable_points();
     _points.push_back(
         new Point("point1",
                   glm::vec3(0.0f, 0.0f, 0.0f), // position
@@ -68,7 +69,7 @@ int main() {
         );
 
     // Add some lines
-    std::vector<Line*> &_lines = scene.mutable_lines();
+    std::vector<Line*> &_lines = scene->mutable_lines();
     _lines.push_back(
         new Line("line1",
                  glm::vec3(0.0f, 0.0f, 0.0f), // starting point
@@ -90,5 +91,18 @@ int main() {
 
     // Render the scene in a separate thread
     std::thread _thread = std::thread(&Scene::render, scene);
+
+    usleep(10000000);
+
+    scene->add_cube(
+        new Object("cube4",
+                   glm::vec3(0.0f, 0.0f, 50.0f),
+                   glm::vec3(5.0f, 5.0f, 5.0f),
+                   glm::vec3(1.0f, 1.0f, 1.0f),
+                   glm::vec3(0.0f, 0.0f, 0.0f),
+                   _textures["wall5"]
+                   )
+        );
+
     _thread.join();
 }

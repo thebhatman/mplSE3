@@ -125,15 +125,15 @@ int Scene::render() {
         shader_point->setmat4("projection", projection);
         shader_point->setmat4("view", view);
 
-        // Render objects
-        for (auto &obj: _objects) {
-            obj->render(*_sprite_scube);
-        }
+        // // Render objects
+        // for (auto &obj: _objects) {
+        //     obj->render(*_sprite_scube);
+        // }
 
-        // Render planes and walls
-        for (auto &_plane: _planes) {
-            _plane->render(*_sprite_plane);
-        }
+        // // Render planes and walls
+        // for (auto &_plane: _planes) {
+        //     _plane->render(*_sprite_plane);
+        // }
 
         // Render points
         for (auto &_point: _points) {

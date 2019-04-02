@@ -78,10 +78,8 @@ void SCube::render(Texture2D texture,
                                 0,1,0,0,
                                 0,0,1,0,
                                 0,0,0,1);
-    // model = glm::translate(model, position);
-    // model = glm::translate(model, glm::vec3( 0.5f * size.x,  0.5f * size.y,  0.5f * size.z));
-    // model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, -0.5f * size.z));
-    model = glm::scale(model, glm::vec3(10.0f));
+    model = glm::translate(model, position);
+    model = glm::scale(model, size);
 
     _shader.use();
     _shader.setmat4("model", model);

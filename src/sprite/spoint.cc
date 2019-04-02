@@ -37,11 +37,11 @@ void SPoint::render(glm::vec3 position,
                                 0,0,1,0,
                                 0,0,0,1);
     model = glm::translate(model, position);
-    // model = glm::scale(model, size);
 
     _shader.use();
     _shader.setmat4("model", model);
-    // _shader.setvec3("color", color);
+    _shader.setvec3("color", color);
+    _shader.setf("size", size);
 
     glBindVertexArray(_VAO);
     glDrawArrays(GL_POINTS, 0, 1);

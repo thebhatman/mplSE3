@@ -125,15 +125,15 @@ int Scene::render() {
         shader_point->setmat4("projection", projection);
         shader_point->setmat4("view", view);
 
-        // // Render objects
-        // for (auto &obj: _objects) {
-        //     obj->render(*_sprite_scube);
-        // }
+        // Render objects
+        for (auto &obj: _objects) {
+            obj->render(*_sprite_scube);
+        }
 
-        // // Render planes and walls
-        // for (auto &_plane: _planes) {
-        //     _plane->render(*_sprite_plane);
-        // }
+        // Render planes and walls
+        for (auto &_plane: _planes) {
+            _plane->render(*_sprite_plane);
+        }
 
         // Render points
         for (auto &_point: _points) {
@@ -193,51 +193,6 @@ void Scene::process_input(GLFWwindow *window) {
 
 void Scene::scroll_callback(GLFWwindow *window, double dx, double dy) {
     camera->process_scroll(dy);
-}
-
-void Scene::generate_random_objects(size_t num) {
-    // Add cuboids
-    for (int ii = 0; ii < num; ++ii) {
-        Object *obj = new Object("cube",
-                                 glm::vec3(0.0f, 0.0f, 0.0f),
-                                 glm::vec3(15.0f, 15.0f, 15.0f),
-                                 glm::vec3(1.0f, 1.0f, 1.0f),
-                                 glm::vec3(0.0f, 0.0f, 0.0f),
-                                 _textures["wall6"]);
-        _objects.push_back(obj);
-    }
-
-    // Add planes (walls and ground surface)
-    Plane *plane = new Plane("ground",
-                             glm::vec3(0.0f, 0.0f, 0.0f),
-                             glm::vec3(80.0f, 1.0f, 80.0f),
-                             glm::vec3(1.0f, 1.0f, 1.0f),
-                             _textures["wall4"]);
-    _planes.push_back(plane);
-
-    // Add some points
-    Point *point = new Point("start",
-                             glm::vec3(0.0f, 0.0f, 0.0f),
-                             5.0f,
-                             glm::vec3(1.0f, 0.0f, 0.0f));
-    _points.push_back(point);
-
-    // Add some lines
-    Line *line1 = new Line("test_line",
-                          glm::vec3(0.0f, 0.0f, 0.0f),
-                          glm::vec3(5.0f, 0.0f, 0.0f),
-                          glm::vec3(1.0f, 0.0f, 0.0f));
-    Line *line2 = new Line("test_line",
-                          glm::vec3(0.0f, 0.0f, 0.0f),
-                          glm::vec3(0.0f, 5.0f, 0.0f),
-                          glm::vec3(0.0f, 1.0f, 0.0f));
-    Line *line3 = new Line("test_line",
-                          glm::vec3(0.0f, 0.0f, 0.0f),
-                          glm::vec3(0.0f, 0.0f, 5.0f),
-                          glm::vec3(0.0f, 0.0f, 1.0f));
-    _lines.push_back(line1);
-    _lines.push_back(line2);
-    _lines.push_back(line3);
 }
 
 } // namespace sim

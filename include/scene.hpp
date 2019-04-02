@@ -80,8 +80,20 @@ public:
     static void mouse_callback(GLFWwindow *window, double x_new, double y_new);
     static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 
-    // generate some random objects in the scene
-    void generate_random_objects(size_t num=1);
+    // utils
+    inline void add_cube(Object *cube)  { _objects.push_back(cube); }
+    inline void add_plane(Plane *plane) { _planes.push_back(plane); }
+    inline void add_point(Point *point) { _points.push_back(point); }
+    inline void add_line(Line *line)    { _lines.push_back(line);   }
+
+    inline std::vector<Object*>& mutable_cubes() { return _objects; }
+    inline std::vector<Plane*>& mutable_planes() { return _planes;  }
+    inline std::vector<Point*>& mutable_points() { return _points;  }
+    inline std::vector<Line*>& mutable_lines()   { return _lines;   }
+
+    inline std::map<std::string, Texture2D>& get_textures() {
+        return _textures;
+    }
 };
 
 } // namespace sim

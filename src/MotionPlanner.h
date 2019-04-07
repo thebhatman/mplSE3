@@ -86,6 +86,8 @@ class Planning{
     double xRight;
     double yTop;
     double yBottom;
+    double zMin;
+    double zMax;
     int selector;
 
 

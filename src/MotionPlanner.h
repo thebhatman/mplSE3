@@ -93,6 +93,7 @@ class Planning{
 
     int maxWidth_;
     int maxHeight_;
+    int maxDepth_;
     og::SimpleSetupPtr ss_;
 
 };
